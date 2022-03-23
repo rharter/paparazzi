@@ -15,7 +15,7 @@ buildscript {
     jcodec: '0.2.5',
     moshi: '1.13.0',
     bytebuddy: '1.11.22',
-    releasedPaparazzi: '0.9.3'
+    releasedPaparazzi: '1.0.0-SNAPSHOT'
   ]
 
   ext.deps = [
@@ -76,6 +76,9 @@ buildscript {
   ]
 
   repositories {
+    maven {
+      url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
     mavenCentral()
     google()
     gradlePluginPortal()
@@ -95,6 +98,9 @@ buildscript {
 
 subprojects {
   repositories {
+    maven {
+      url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
     mavenCentral()
     google()
     //mavenLocal()

@@ -54,6 +54,7 @@ import app.cash.paparazzi.internal.Renderer
 import app.cash.paparazzi.internal.ResourcesInterceptor
 import app.cash.paparazzi.internal.SessionParamsBuilder
 import app.cash.paparazzi.internal.ChoreographerDelegateInterceptor
+import app.cash.paparazzi.internal.TearDownEditModeInterceptor
 import com.android.ide.common.rendering.api.RenderSession
 import com.android.ide.common.rendering.api.Result
 import com.android.ide.common.rendering.api.Result.Status.ERROR_UNKNOWN
@@ -127,6 +128,7 @@ class Paparazzi @JvmOverloads constructor(
 
     registerFontLookupInterceptionIfResourceCompatDetected()
     registerViewEditModeInterception()
+    registerImmEditModeInterception()
     registerMatrixMultiplyInterception()
     registerChoreographerDelegateInterception()
 
@@ -510,6 +512,17 @@ class Paparazzi @JvmOverloads constructor(
     val viewClass = Class.forName("android.view.View")
     InterceptorRegistrar.addMethodInterceptor(
         viewClass, "isInEditMode", EditModeInterceptor::class.java
+    )
+  }
+
+  private fun registerImmEditModeInterception() {
+    val viewClass = Class.forName("android.view.inputmethod.InputMethodManager")
+    InterceptorRegistrar.addMethodInterceptors(
+      viewClass,
+      setOf(
+        "isInEditMode" to EditModeInterceptor::class.java,
+        "tearDownEditMode" to TearDownEditModeInterceptor::class.java
+      )
     )
   }
 

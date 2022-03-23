@@ -158,6 +158,15 @@ class PaparazziPluginTest {
   }
 
   @Test
+  fun interceptImmEditMode() {
+    val fixtureRoot = File("src/test/projects/imm-edit-mode-intercept")
+
+    gradleRunner
+        .withArguments("testDebug", "--stacktrace")
+        .runFixture(fixtureRoot) { build() }
+  }
+
+  @Test
   fun record() {
     val fixtureRoot = File("src/test/projects/record-mode")
 
